@@ -55,7 +55,7 @@ class Checkbox {
         this.x = x;
         this.y = y;
         this.scene = scene;
-        this.layout = layout
+        this.layout = layout;
             
         const element = scene.add.rectangle(0, 0, this.styles.checkbox.size, this.styles.checkbox.size, checkboxColor, 0)
             .setOrigin(0)
