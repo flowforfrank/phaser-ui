@@ -138,8 +138,8 @@ class Layout {
 
         if (this.isDraggable) {
             this.layout.setInteractive({ useHandCursor: true });
-            this.layout.input.hitArea.setTo(x + this.styles.padding, y - this.styles.padding, this.layout.width, this.layout.height);
-      
+            this.layout.input.hitArea.setTo(this.layout.width / 2, this.layout.height / 2, this.layout.width, this.layout.height);
+
             scene.input.setDraggable(this.layout);
 
             scene.input.on('drag', (pointer, gameObject, dragX, dragY) => {
