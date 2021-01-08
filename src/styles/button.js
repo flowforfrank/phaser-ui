@@ -10,5 +10,9 @@ export default {
     hoverBackgroundColor: '#f39c12',
     borderWidth: 1,
     borderOpacity: 1.75, // set to 175% because of 25% opacity of overall layout
-    opacity: .25
+    opacity: .25,
+    disabled: {
+        backgroundColor: '#111111',
+        color: '#555'
+    }
 }

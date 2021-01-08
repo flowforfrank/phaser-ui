@@ -1,10 +1,15 @@
 import Button from '../components/Button'
 
-const button = new Button('Button')
+let disabled = false;
+
+export const button = new Button('Button')
     .setStyle({})
     .onClick(id => console.log(`Clicked button: ${id}`));
-        
-// button.setVisible(false);
-// button.setVisible(true);
 
-export default button;
+export const toggleButton = new Button('Toggle')
+    .setStyle({})
+    .onClick(() => button.setDisabled(disabled = !disabled));
+        
+// enabledButton.setVisible(false);
+// enabledButton.setVisible(true);
+// disabledButton = new Button('Disabled by default', false);
