@@ -3,11 +3,17 @@ export default {
         color: '#f39c12',
         size: 25,
         strokeWidth: 1,
-        hoverOpacity: .25
+        hoverOpacity: .25,
+        disabled: {
+            color: '#9e6100'
+        }
     },
     label: {
         color: '#f39c12',
-        margin: 5
+        margin: 5,
+        disabled: {
+            color: '#9e6100'
+        }
         // can be any property from:
         // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/text/#add-text-object
     },

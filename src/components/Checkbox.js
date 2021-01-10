@@ -1,10 +1,11 @@
 import styles from '../styles/checkbox'
 
 class Checkbox {
-    constructor(label, state) {
+    constructor(label, state, enabled) {
         this.label = label;
         this.state = state;
         this.styles = styles;
+        this.disabled = typeof enabled !== 'undefined' ? !enabled : false;
         this.callback = () => { console.error('Missing onChange event for', this.label) };
 
         return this;
@@ -29,6 +30,15 @@ class Checkbox {
         return this;
     }
 
+    setDisabled(isDisabled) {
+        this.disabled = isDisabled;
+        this.destroy();
+
+        this.create(this.x, this.y, this.scene, this.layout);
+
+        return this;
+    }
+
     onChange(callback) {
         this.callback = callback;
 
@@ -37,7 +47,7 @@ class Checkbox {
 
     setState(state) {
         this.state = state;
-        this.container.destroy();
+        this.destroy();
 
         this.create(this.x, this.y, this.scene, this.layout);
         this.callback(state);        
@@ -51,12 +61,13 @@ class Checkbox {
 
     create(x, y, scene, layout) {
         const checkboxColor = parseInt(this.styles.checkbox.color.substring(1), 16);
+        const disabledCheckboxColor = parseInt(this.styles.checkbox.disabled.color.substring(1), 16);
 
         this.x = x;
         this.y = y;
         this.scene = scene;
         this.layout = layout;
-            
+
         const element = scene.add.rectangle(0, 0, this.styles.checkbox.size, this.styles.checkbox.size, checkboxColor, 0)
             .setOrigin(0)
             .setStrokeStyle(this.styles.checkbox.strokeWidth, checkboxColor)
@@ -74,7 +85,7 @@ class Checkbox {
             .on('pointerover', () => element.setFillStyle(checkboxColor, this.styles.checkbox.hoverOpacity))
             .on('pointerout', () => element.setFillStyle(checkboxColor, 0));
 
-        label.setPadding((this.styles.checkbox.size - label.height) / 2)
+        label.setPadding((this.styles.checkbox.size - label.height) / 2);
 
         const checkboxWidth = this.styles.checkbox.size
             + (this.styles.label.margin || 0)
@@ -94,6 +105,13 @@ class Checkbox {
                 .setScale(this.styles.icon.scale || this.styles.checkbox.size / defaultCheckboxSize);
         
             this.container.add(checkIcon);
+        }
+
+        if (this.disabled) {
+            element.disableInteractive()
+                .setStrokeStyle(this.styles.checkbox.strokeWidth, disabledCheckboxColor);
+            label.disableInteractive()
+                .setStyle(this.styles.label.disabled);
         }
 
         if (layout) {

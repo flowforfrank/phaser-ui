@@ -1,4 +1,4 @@
-import CheckboxExample from './examples/checkbox'
+import { checkbox, toggleCheckbox }  from './examples/checkbox'
 import { button, toggleButton } from './examples/button'
 import RadioButtonExample from './examples/radio'
 import { LayoutExample1, LayoutExample2 } from './examples/layout'
@@ -10,7 +10,8 @@ class Demo extends Phaser.Scene {
     }
 
     create(data) {
-        CheckboxExample.create(50, 50, this);
+        checkbox.create(50, 50, this);
+        toggleCheckbox.create(200, 50, this);
         button.create(50, 100, this);
         toggleButton.create(160, 100, this);
         LayoutExample1.create(50, 175, this);
