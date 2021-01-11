@@ -3,4 +3,5 @@ node_modules
 
 # Builds
 build
+dist
 .cache
