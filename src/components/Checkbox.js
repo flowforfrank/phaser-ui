@@ -1,6 +1,19 @@
 import styles from '../styles/checkbox'
 
 class Checkbox {
+    /**
+     * @summary Generates a new checkbox
+     * 
+     * @param {string}   label
+     * @param {boolean}  state
+     * @param {boolean}  enabled
+     * 
+     * @example
+     * new Checkbox('Checkbox', false).create(x, y, scene);
+     * new Checkbox('Checkbox', true, false).create(x, y, scene);
+     *
+     * @returns {object} Checkbox
+     */
     constructor(label, state, enabled) {
         this.label = label;
         this.state = state;
@@ -11,6 +24,16 @@ class Checkbox {
         return this;
     }
 
+    /**
+     * @summary Sets the styles of a checkbox
+     * 
+     * @param {object} styles
+     * 
+     * @example
+     * new Checkbox('Checkbox').setStyle({ checkbox: {}, label: {}, icon: {} });
+     *
+     * @returns {object} Checkbox
+     */
     setStyle(styles) {
         this.styles = {
             checkbox: {
@@ -30,6 +53,17 @@ class Checkbox {
         return this;
     }
 
+    /**
+     * @summary Disable or enable a checkbox
+     * 
+     * @param {boolean} isDisabled
+     * 
+     * @example
+     * checkbox.setDisabled(true);
+     * checkbox.setDisabled(false);
+     *
+     * @returns {object} Checkbox
+     */
     setDisabled(isDisabled) {
         this.disabled = isDisabled;
         this.destroy();
@@ -39,12 +73,33 @@ class Checkbox {
         return this;
     }
 
+    /**
+     * @summary Sets a callback function for the checkbox
+     * 
+     * @param {function} callback
+     * 
+     * @example
+     * new Checkbox('Checkbox').onChange(state => console.log(`State changed to ${state}`));
+     *
+     * @returns {object} Checkbox
+     */
     onChange(callback) {
         this.callback = callback;
 
         return this;
     }
 
+    /**
+     * @summary Sets the state of a checkbox
+     * 
+     * @param {boolean} state
+     * 
+     * @example
+     * checkbox.setState(false);
+     * checkbox.setState(true);
+     *
+     * @returns {object} Checkbox
+     */
     setState(state) {
         this.state = state;
         this.destroy();
@@ -55,10 +110,32 @@ class Checkbox {
         return this;
     }
 
+    /**
+     * @summary Sets the visibility of a checkbox
+     * 
+     * @param {boolean} visible
+     * 
+     * @example
+     * checkbox.setVisible(false);
+     * checkbox.setVisible(true);
+     */
     setVisible(visible) {
         this.container.setVisible(visible);
     }
 
+    /**
+     * @summary Creates a new checkbox at a given position
+     * 
+     * @param {number} x
+     * @param {number} y
+     * @param {object} scene
+     * 
+     * @example
+     * new Checkbox('Checkbox').create(x, y, scene);
+     * new Checkbox('Checkbox').create(10, 10, this);
+     * 
+     * @returns {object} Checkbox
+     */
     create(x, y, scene, layout) {
         const checkboxColor = parseInt(this.styles.checkbox.color.substring(1), 16);
         const disabledCheckboxColor = parseInt(this.styles.checkbox.disabled.color.substring(1), 16);
@@ -121,6 +198,12 @@ class Checkbox {
         return this;
     }
 
+    /**
+     * @summary Destroys the checkbox
+     * 
+     * @example
+     * checkbox.destroy();
+     */
     destroy() {
         this.container.destroy();
     }
