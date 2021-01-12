@@ -1,20 +1,33 @@
 {
     "name": "phaser-uikit",
     "version": "0.1.1-2",
-    "description": "",
-    "main": "index.js",
+    "description": "A UI library for the Phaser game framework",
+    "author": "Ferenc Almasi <hello@allma.si> (https://webtips.dev)",
+    "bugs": "https://github.com/flowforfrank/phaser-ui/issues",
+    "license": "ISC",
+    "main": "dist/index.js",
     "module": "dist/index.js",
+    "keywords": [
+        "phaser",
+        "HTML5",
+        "canvas",
+        "WebGL",
+        "JavaScript",
+        "UI",
+        "Library"
+    ],
     "files": [
         "dist"
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/flowforfrank/phaser-ui"
+    },
     "scripts": {
         "start": "parcel index.html --no-autoinstall --open --out-dir build",
         "build": "node scripts/build.js",
         "test": "echo \"No test specified\""
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
     "dependencies": {
         "parcel-bundler": "1.12.4",
         "phaser": "3.50.1"
