@@ -1,7 +1,11 @@
+import Element from './core/Element'
+
 import styles from '../styles/radio'
 
-class Radio {
+class Radio extends Element {
     constructor() {
+        super();
+
         this.buttons = [];
         this.styles = styles;
         this.elementsTotalHeight = 0;
@@ -25,12 +29,6 @@ class Radio {
         return this;
     }
 
-    onChange(callback) {
-        this.callback = callback;
-
-        return this;
-    }
-
     setState(index) {
         if (!this.buttons[index].state) {
             this.buttons = this.buttons.map(button => ({ ...button, state: false }));
@@ -49,10 +47,6 @@ class Radio {
         });
 
         return this;
-    }
-
-    setVisible(visible) {
-        this.container.setVisible(visible);
     }
 
     calculateWidth() {
@@ -160,6 +154,12 @@ class Radio {
         return this;
     }
 
+    /**
+     * @summary Destroys the Radio
+     * 
+     * @example
+     * radio.destroy();
+     */
     destroy() {
         this.elementsTotalHeight = 0;
         this.container.destroy();

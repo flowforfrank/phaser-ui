@@ -7,6 +7,8 @@
 #### Create a default button:
 
 ```javascript
+import { Button } from 'phaser-uikit'
+
 new Button('Button')
     .onClick(id => console.log(`Clicked button: ${id}`))
     .create(x, y, scene);

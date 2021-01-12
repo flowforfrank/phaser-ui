@@ -1,6 +1,8 @@
+import Element from './core/Element'
+
 import styles from '../styles/checkbox'
 
-class Checkbox {
+class Checkbox extends Element {
     /**
      * @summary Generates a new checkbox
      * 
@@ -15,6 +17,8 @@ class Checkbox {
      * @returns {object} Checkbox
      */
     constructor(label, state, enabled) {
+        super();
+
         this.label = label;
         this.state = state;
         this.styles = styles;
@@ -54,42 +58,6 @@ class Checkbox {
     }
 
     /**
-     * @summary Disable or enable a checkbox
-     * 
-     * @param {boolean} isDisabled
-     * 
-     * @example
-     * checkbox.setDisabled(true);
-     * checkbox.setDisabled(false);
-     *
-     * @returns {object} Checkbox
-     */
-    setDisabled(isDisabled) {
-        this.disabled = isDisabled;
-        this.destroy();
-
-        this.create(this.x, this.y, this.scene, this.layout);
-
-        return this;
-    }
-
-    /**
-     * @summary Sets a callback function for the checkbox
-     * 
-     * @param {function} callback
-     * 
-     * @example
-     * new Checkbox('Checkbox').onChange(state => console.log(`State changed to ${state}`));
-     *
-     * @returns {object} Checkbox
-     */
-    onChange(callback) {
-        this.callback = callback;
-
-        return this;
-    }
-
-    /**
      * @summary Sets the state of a checkbox
      * 
      * @param {boolean} state
@@ -108,19 +76,6 @@ class Checkbox {
         this.callback(state);        
 
         return this;
-    }
-
-    /**
-     * @summary Sets the visibility of a checkbox
-     * 
-     * @param {boolean} visible
-     * 
-     * @example
-     * checkbox.setVisible(false);
-     * checkbox.setVisible(true);
-     */
-    setVisible(visible) {
-        this.container.setVisible(visible);
     }
 
     /**
@@ -196,16 +151,6 @@ class Checkbox {
         }
 
         return this;
-    }
-
-    /**
-     * @summary Destroys the checkbox
-     * 
-     * @example
-     * checkbox.destroy();
-     */
-    destroy() {
-        this.container.destroy();
     }
 }
 

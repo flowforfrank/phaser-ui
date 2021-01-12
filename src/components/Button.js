@@ -1,6 +1,8 @@
+import Element from './core/Element'
+
 import styles from '../styles/button'
 
-class Button {
+class Button extends Element {
     /**
      * @summary Generates a new button
      * 
@@ -14,6 +16,8 @@ class Button {
      * @returns {object} Button
      */
     constructor(label, enabled) {
+        super();
+
         this.label = label;
         this.styles = styles;
         this.disabled = typeof enabled !== 'undefined' ? !enabled : false;
@@ -39,55 +43,6 @@ class Button {
         };
 
         return this;
-    }
-
-    /**
-     * @summary Disable or enable a button
-     * 
-     * @param {boolean} isDisabled
-     * 
-     * @example
-     * button.setDisabled(true);
-     * button.setDisabled(false);
-     *
-     * @returns {object} Button
-     */
-    setDisabled(isDisabled) {
-        this.disabled = isDisabled;
-        this.destroy();
-
-        this.create(this.x, this.y, this.scene, this.layout);
-
-        return this;
-    }
-
-    /**
-     * @summary Sets a callback function for the button
-     * 
-     * @param {function} callback
-     * 
-     * @example
-     * new Button('Button').onClick(id => console.log(`clicked on ${id}`));
-     *
-     * @returns {object} Button
-     */
-    onClick(callback) {
-        this.callback = callback;
-
-        return this;
-    }
-
-    /**
-     * @summary Sets the visibility of a button
-     * 
-     * @param {boolean} visible
-     * 
-     * @example
-     * button.setVisible(false);
-     * button.setVisible(true);
-     */
-    setVisible(visible) {
-        this.container.setVisible(visible);
     }
 
     /**
@@ -127,16 +82,6 @@ class Button {
         }
 
         return this;
-    }
-
-    /**
-     * @summary Destroys the button
-     * 
-     * @example
-     * button.destroy();
-     */
-    destroy() {
-        this.container.destroy();
     }
 }
 

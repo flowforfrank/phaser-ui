@@ -7,6 +7,8 @@
 #### Create a default checkbox:
 
 ```javascript
+import { Checkbox } from 'phaser-uikit'
+
 new Checkbox('Checkbox', false)
     .onChange(state => console.log(`State changed to ${state}`))
     .create(x, y, scene);
