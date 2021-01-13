@@ -122,9 +122,8 @@ button.create(x, y, scene);
 
 ## Styles
 
-You can pass any style you would normally define for a [`Text GameObject`](https://rexrainbow.github.io/phaser3-rex-notes/docs/site/text/#add-text-object).
-
-On top of that, you can pass the following custom properties to `setStyle`:
+- You can pass any style you would normally define for a [Text GameObject](https://rexrainbow.github.io/phaser3-rex-notes/docs/site/text/#add-text-object).
+- On top of that, you can pass the following custom properties to `setStyle`:
 
 ```javascript
 {   
@@ -144,7 +143,7 @@ On top of that, you can pass the following custom properties to `setStyle`:
     backgroundHoverImage: 'customButtonHover',
 
     // Sets a disabled image for the button
-    backgroundDisabledImage: 'customButtonDisabled'
+    backgroundDisabledImage: 'customButtonDisabled',
 
     // Sets the styles for a disabled button
     // Can take up any property from a Text GameObject
