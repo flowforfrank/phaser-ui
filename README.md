@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="UI library for Phaser" src="src/phaser-ui.png" />
+    <img alt="UI library for Phaser" src="src/assets/phaser-ui.png" />
 </h1>
 
 A UI library for the [Phaser](https://phaser.io/) game framework.
@@ -14,6 +14,12 @@ You can import all available modules to your project with:
 
 ```javascript
 import * as UI from 'phaser-uikit'
+```
+
+Or just the ones you need:
+
+```javascript
+import { Button, Layout } from 'phaser-uikit'
 ```
 
 ## Components

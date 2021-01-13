@@ -34,7 +34,7 @@ new Checkbox('Checkbox', true, false)
     .create(x, y, scene);
 
 // Or set the checkbox disabled dynamically
-const checkbox = new Checkbox('Checkbox', true, false)
+const checkbox = new Checkbox('Checkbox', true)
     .create(x, y, scene);
 
 checkbox.setDisabled(true);

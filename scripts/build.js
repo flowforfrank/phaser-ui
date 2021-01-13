@@ -18,9 +18,11 @@ const components = fs.readdirSync(componentsPath);
     for (const component of components) {
         const entry = `${componentsPath}/${component}`;
 
-        indexExports.push(`export { default as ${component.split('.')[0]} } from './${component}'`);
+        if (fs.statSync(entry).isFile()) {
+            indexExports.push(`export { default as ${component.split('.')[0]} } from './${component}'`);
 
-        await new Bundler(entry, options).bundle();
+            await new Bundler(entry, options).bundle();
+        }
     }
 
     fs.writeFileSync(indexFilePath, indexExports.join('\n'));

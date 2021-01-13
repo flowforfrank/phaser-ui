@@ -1,5 +1,6 @@
 import Element from './core/Element'
 
+import privates from './private/button'
 import styles from '../styles/button'
 
 class Button extends Element {
@@ -21,26 +22,7 @@ class Button extends Element {
         this.label = label;
         this.styles = styles;
         this.disabled = typeof enabled !== 'undefined' ? !enabled : false;
-        this.callback = () => { console.error('Missing onClick event for', this.label) };
-
-        return this;
-    }
-
-    /**
-     * @summary Sets the styles of a button
-     * 
-     * @param {object} styles
-     * 
-     * @example
-     * new Button('Button').setStyle({ backgroundColor: '#f39c12' });
-     *
-     * @returns {object} Button
-     */
-    setStyle(styles) {
-        this.styles = {
-            ...this.styles,
-            ...styles
-        };
+        this.callback = () => console.error('Missing onClick event for', this.label || this.styles.backgroundImage);
 
         return this;
     }
@@ -64,17 +46,22 @@ class Button extends Element {
         this.scene = scene;
         this.layout = layout;
 
-        this.container = scene.add.text(x, y, this.label, this.styles)
-            .setOrigin(0)
-            .setPadding(styles.padding)
-            .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () => this.callback(`#${this.label}${x}${y}`))
-            .on('pointerover', () => this.container.setStyle({ fill: this.styles.hoverBackgroundColor }))
-            .on('pointerout', () => this.container.setStyle({ fill: this.styles.color }));
+        if (this.styles.backgroundImage) {
+            privates.setButtonImage.call(this);
+        } else {
+            this.container = scene.add.text(x, y, this.label, this.styles)
+                .setOrigin(0)
+                .setPadding(styles.padding)
+                .setInteractive({ useHandCursor: true })
+                .on('pointerdown', () => this.callback(`#${this.label}${x}${y}`))
+                .on('pointerover', () => this.container.setStyle({ fill: this.styles.hoverColor, backgroundColor: this.styles.hoverBackgroundColor }))
+                .on('pointerout', () => this.container.setStyle({ fill: this.styles.color, backgroundColor: this.styles.backgroundColor  }));
+        }
 
         if (this.disabled) {
-            this.container.disableInteractive()
-                .setStyle(this.styles.disabled);
+            this.styles.backgroundImage
+                ? this.container.disableInteractive()
+                : this.container.disableInteractive().setStyle(this.styles.disabled);
         }
 
         if (layout) {

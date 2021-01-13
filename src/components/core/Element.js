@@ -1,22 +1,6 @@
 class Element {
 
     /**
-     * @summary Sets an onChange callback function for the component
-     * 
-     * @param {function} callback
-     * 
-     * @example
-     * new Checkbox('Checkbox').onChange(state => console.log(`State changed to ${state}`));
-     *
-     * @returns {object} Component
-     */
-    onChange(callback) {
-        this.callback = callback;
-
-        return this;
-    }
-
-    /**
      * @summary Sets an onClick callback function for the component
      * 
      * @param {function} callback
@@ -33,7 +17,44 @@ class Element {
     }
 
     /**
-     * @summary Disable or enable a component
+     * @summary Sets an onChange callback function for the component
+     * 
+     * @param {function} callback
+     * 
+     * @example
+     * new Checkbox('Checkbox').onChange(state => console.log(`State changed to ${state}`));
+     *
+     * @returns {object} Component
+     */
+    onChange(callback) {
+        this.callback = callback;
+
+        return this;
+    }
+
+    /**
+     * @summary Sets the styles of a component
+     * 
+     * @param {object} styles
+     * 
+     * @example
+     * new Button('Button').setStyle({ backgroundColor: '#f39c12' });
+     *
+     * @returns {object} Component
+     */
+    setStyle(styles) {
+        this.styles = {
+            ...this.styles,
+            ...styles
+        };
+
+        return this;
+    }
+
+    /**
+     * @summary Disable or enable a component.
+     * The component must be created
+     * before you can call setDisabled
      * 
      * @param {boolean} isDisabled
      * 
@@ -72,6 +93,10 @@ class Element {
      * component.destroy();
      */
     destroy() {
+        if (!this.container) {
+            console.error('Cannot destroy component that hasn\'t been created', this);
+        }
+
         this.container.destroy();
     }
 }
