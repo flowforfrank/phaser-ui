@@ -1,5 +1,6 @@
 import Element from './core/Element'
 
+import privates from './private/checkbox'
 import styles from '../styles/checkbox'
 
 class Checkbox extends Element {
@@ -92,58 +93,34 @@ class Checkbox extends Element {
      * @returns {object} Checkbox
      */
     create(x, y, scene, layout) {
-        const checkboxColor = parseInt(this.styles.checkbox.color.substring(1), 16);
-        const disabledCheckboxColor = parseInt(this.styles.checkbox.disabled.color.substring(1), 16);
-
         this.x = x;
         this.y = y;
         this.scene = scene;
         this.layout = layout;
+        this.container = scene.add.container(x, y, []);
 
-        const element = scene.add.rectangle(0, 0, this.styles.checkbox.size, this.styles.checkbox.size, checkboxColor, 0)
-            .setOrigin(0)
-            .setStrokeStyle(this.styles.checkbox.strokeWidth, checkboxColor)
-            .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () => this.setState(!this.state))
-            .on('pointerover', () => element.setFillStyle(checkboxColor, this.styles.checkbox.hoverOpacity))
-            .on('pointerout', () => element.setFillStyle(checkboxColor, 0));
+        const checkbox = this.styles.checkbox.image
+            ? privates.createCheckboxImage.call(this)
+            : privates.createCheckbox.call(this);
 
-        const labelX = element.width + (this.styles.label.margin || 0);
-        const labelY = element.height / 2;
-        const label = scene.add.text(labelX, labelY, this.label, this.styles.label)
-            .setOrigin(0, .5)
-            .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () => this.setState(!this.state))
-            .on('pointerover', () => element.setFillStyle(checkboxColor, this.styles.checkbox.hoverOpacity))
-            .on('pointerout', () => element.setFillStyle(checkboxColor, 0));
-
-        label.setPadding((this.styles.checkbox.size - label.height) / 2);
-
-        const checkboxWidth = this.styles.checkbox.size
-            + (this.styles.label.margin || 0)
-            + label.width;
-
-        this.container = scene.add.container(x, y, [element, label])
-            .setSize(checkboxWidth, this.styles.checkbox.size);
+        const label = privates.createLabel.call(this, checkbox);
 
         if (this.state) {
-            const defaultCheckboxSize = 50;
-            const checkIconColor = parseInt(this.styles.icon.color.substring(1), 16);
-            
-            const checkIconX = element.width / 2 + (this.styles.icon.translateX || 0);
-            const checkIconY = element.height / 2 + (this.styles.icon.translateY || 0);
-
-            const checkIcon = scene.add.polygon(checkIconX, checkIconY, this.styles.icon.shape, checkIconColor)
-                .setScale(this.styles.icon.scale || this.styles.checkbox.size / defaultCheckboxSize);
-        
-            this.container.add(checkIcon);
+            privates.createIcon.call(this, checkbox);
         }
 
         if (this.disabled) {
-            element.disableInteractive()
-                .setStrokeStyle(this.styles.checkbox.strokeWidth, disabledCheckboxColor);
-            label.disableInteractive()
-                .setStyle(this.styles.label.disabled);
+            const disabledCheckboxColor = this.styles.checkbox.disabled.color
+                ? parseInt(this.styles.checkbox.disabled.color.substring(1), 16)
+                : parseInt(this.styles.label.disabled.color.substring(1), 16);
+
+            if (!this.styles.checkbox.image) {
+                checkbox.setStrokeStyle(this.styles.checkbox.strokeWidth, disabledCheckboxColor);
+            }
+
+            label.setStyle(this.styles.label.disabled);
+
+            this.container.disableInteractive();
         }
 
         if (layout) {
