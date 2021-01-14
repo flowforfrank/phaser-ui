@@ -1,7 +1,23 @@
+import Element from './core/Element'
+
+import privates from './private/layout'
 import styles from '../styles/layout'
 
-class Layout {
+class Layout extends Element {
+    /**
+     * @summary Generates a new layout
+     * 
+     * @example
+     * new Layout()
+     *     .add(new Button('Start'))
+     *     .add(new Button('Exit'))
+     *     .create(x, y, scene);
+     *
+     * @returns {object} Layout
+     */
     constructor() {
+        super();
+
         this.styles = styles;
         this.elements = [];
         this.containers = [];
@@ -20,80 +36,71 @@ class Layout {
         return this;
     }
 
-    setStyle(styles) {
-        this.styles = {
-            ...this.styles,
-            ...styles
-        };
-
-        return this;
-    }
-
-    setVisible(visible) {
-        this.layout.setVisible(visible);
-    }
-
+    /**
+     * @summary Sets the layout to be draggable
+     * 
+     * @param {boolean} isDraggable
+     * 
+     * @example
+     * layout.setDraggable(true);
+     * layout.setDraggable(false);
+     *
+     * @returns {object} Layout
+     */
     setDraggable(isDraggable) {
         this.isDraggable = isDraggable;
 
         return this;
     }
 
+    /**
+     * @summary Sets an onDrag callback function for the layout
+     * 
+     * @param {function} callback
+     * 
+     * @example
+     * new Layout().onDrag((x, y) => console.log(`dragged to ${x}, ${y}`));
+     *
+     * @returns {object} Layout
+     */
     onDrag(callback) {
         this.callback = callback;
 
         return this;
     }
 
+    /**
+     * @summary Adds an element to the layout.
+     * You don't need to call `create` on the element.
+     * 
+     * @param {function} callback
+     * 
+     * @example
+     * new Layout().add(new Button('Start'));
+     *
+     * @returns {object} Layout
+     */
     add(element) {
         this.elements.push(element);
 
         return this;
     }
 
-    setAutoHeight() {
-        let containersIndex = this.containers.length;
-        let calculatedHeight = this.styles.padding * 2;
-
-        while(containersIndex--) {
-            calculatedHeight += this.containers[containersIndex].height;
-
-            if (containersIndex) {
-                calculatedHeight += this.styles.margin;
-            }
-        }
-
-        this.styles.height = calculatedHeight;
-    }
-
-    setAutoWidth() {
-        let containersIndex = this.containers.length;
-        let calculatedWidth = 0;
-
-        while(containersIndex--) {
-            calculatedWidth = this.containers[containersIndex].width + (this.styles.padding * 2);
-
-            if (this.styles.width < calculatedWidth) {
-                this.styles.width = calculatedWidth;
-            }
-        }
-    }
-
-    createElement({ element, scene, index }) {        
-        const x = this.styles.padding;
-        const y = index === 0
-            ? this.styles.padding
-            : this.styles.padding
-                + (index * this.styles.margin)
-                + this.elementsTotalHeight;
-
-        element.create(x, y, scene, this.layout);
-
-        this.elementsTotalHeight += element.container.height;
-        this.containers.push(element.container);
-        this.layout.add(element.container);
-    }
-
+    /**
+     * @summary Creates a new layout at a given position
+     * 
+     * @param {number} x
+     * @param {number} y
+     * @param {object} scene
+     * 
+     * @example
+     * new Layout()
+     *     .add(new Button('Start'))
+     *     .add(new Button('Exit'))
+     *     .create(x, y, scene);
+     * 
+     * @returns {object} Layout
+     */
     create(x, y, scene) {
         this.x = x;
         this.y = y;
@@ -105,7 +112,7 @@ class Layout {
         let numberOfElements = this.elements.length;
 
         while(index < numberOfElements) {
-            this.createElement({
+            privates.createElement.call(this, {
                 element: this.elements[index],
                 scene,
                 index
@@ -115,44 +122,32 @@ class Layout {
         }
     
         if (this.useAutoWidth) {
-            this.setAutoWidth();
+            privates.setAutoWidth.call(this);
         }
 
         if (this.useAutoHeight) {
-            this.setAutoHeight();
+            privates.setAutoHeight.call(this);
         }
 
         if (this.styles.opacity) {
-            const layoutBackgroundColor = parseInt(this.styles.backgroundColor.substring(1), 16);
-            const borderColor = parseInt(this.styles.borderColor.substring(1), 16);
-            const layoutElement = scene.add.rectangle(0, 0, this.styles.width, this.styles.height, layoutBackgroundColor) 
-                .setOrigin(0)
-                .setAlpha(this.styles.opacity)
-                .setStrokeStyle(this.styles.borderWidth, borderColor, this.styles.borderOpacity);
-            
-            this.layout.add(layoutElement)
-                .sendToBack(layoutElement);
+            privates.setLayoutBackground.call(this);
         }
 
         this.layout.setSize(this.styles.width, this.styles.height);
 
         if (this.isDraggable) {
-            this.layout.setInteractive({ useHandCursor: true });
-            this.layout.input.hitArea.setTo(this.layout.width / 2, this.layout.height / 2, this.layout.width, this.layout.height);
-
-            scene.input.setDraggable(this.layout);
-
-            scene.input.on('drag', (pointer, gameObject, dragX, dragY) => {
-                gameObject.x = dragX;
-                gameObject.y = dragY;
-                
-                this.callback(dragX, dragY);
-            });
+            privates.setLayoutDraggable.call(this);
         }
 
         return this;
     }
 
+    /**
+     * @summary Destroys the Layout
+     * 
+     * @example
+     * layout.destroy();
+     */
     destroy() {
         this.containers = [];
         this.elementsTotalHeight = 0;
