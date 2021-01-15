@@ -1,6 +1,6 @@
 {
     "name": "phaser-uikit",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "A UI library for the Phaser game framework",
     "author": "Ferenc Almasi <hello@allma.si> (https://webtips.dev)",
     "bugs": "https://github.com/flowforfrank/phaser-ui/issues",
