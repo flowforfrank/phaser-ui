@@ -3,7 +3,6 @@ export default {
     height: 'auto',
     padding: 20,
     margin: 20,
-    border: 0,
     backgroundColor: '#221f22',
     borderColor: '#f39c12',
     borderWidth: 1,
