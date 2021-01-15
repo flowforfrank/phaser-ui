@@ -18,7 +18,7 @@ class Layout extends Element {
     constructor() {
         super();
 
-        this.styles = styles;
+        this.styles = { ...styles };
         this.elements = [];
         this.containers = [];
         this.elementsTotalHeight = 0;
